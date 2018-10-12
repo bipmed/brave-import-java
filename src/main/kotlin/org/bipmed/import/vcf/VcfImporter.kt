@@ -11,7 +11,7 @@ import java.io.File
 class VcfImporter(private val mongoTemplate: MongoTemplate) {
 
 
-    fun import(filename: String, datasetId: String, assemblyId: String) {
+    fun import(filename: String, datasetId: String, assemblyId: String): Long {
         val vcfFileReader = VCFFileReader(File(filename), false)
 
         val geneSymbolIndex = if (vcfFileReader.fileHeader.hasInfoLine("ANN")) {
@@ -23,6 +23,8 @@ class VcfImporter(private val mongoTemplate: MongoTemplate) {
         } else {
             null
         }
+
+        var count = 0L
 
         vcfFileReader.forEach {
             val variant = Variant(
@@ -38,7 +40,10 @@ class VcfImporter(private val mongoTemplate: MongoTemplate) {
                     assemblyId = assemblyId)
 
             mongoTemplate.insert(variant)
+            count++
         }
+
+        return count
     }
 
     private fun getGeneSymbol(geneSymbolIndex: Int?, it: VariantContext): String? {

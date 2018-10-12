@@ -22,7 +22,8 @@ class BipmedImport(private val vcfImporter: VcfImporter) : CommandLineRunner {
 
     override fun run(vararg args: String) {
         if (filename.isNotBlank() && datasetId.isNotBlank() && assemblyId.isNotBlank()) {
-            vcfImporter.import(filename, datasetId, assemblyId)
+            val count = vcfImporter.import(filename, datasetId, assemblyId)
+            println("Imported $count variants.")
         } else {
             println("USAGE: java -jar bipmed-import.jar --filename file.vcf.gz --datasetId bipmed --datasetId hg19")
             exitProcess(1)

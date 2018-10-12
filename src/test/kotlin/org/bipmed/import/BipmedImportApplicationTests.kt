@@ -27,8 +27,9 @@ class BipmedImportApplicationTests {
 
     @Test
     fun import() {
-        vcfImporter.import(filename, "test", "hg19")
+        val count = vcfImporter.import(filename, "test", "hg19")
         assertThat(mongoTemplate.find(Query(), Variant::class.java).size).isEqualTo(5)
+        assertThat(count).isEqualTo(5)
     }
 
 }
