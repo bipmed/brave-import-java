@@ -28,7 +28,7 @@ class VcfImporter(private val mongoTemplate: MongoTemplate) {
             val variant = Variant(
                     variantIds = listOf(it.id),
                     geneSymbol = getGeneSymbol(geneSymbolIndex, it),
-                    sampleCount = it.nSamples.toLong(),
+                    sampleCount = it.getAttributeAsString("NS", null)?.toLong(),
                     start = it.start.toLong(),
                     referenceName = it.contig,
                     datasetId = datasetId,
