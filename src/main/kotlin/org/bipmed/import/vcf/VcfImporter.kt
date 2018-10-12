@@ -32,7 +32,7 @@ class VcfImporter(private val mongoTemplate: MongoTemplate) {
                     geneSymbol = getGeneSymbol(geneSymbolIndex, it),
                     sampleCount = it.getAttributeAsString("NS", null)?.toLong(),
                     start = it.start.toLong(),
-                    referenceName = it.contig,
+                    referenceName = it.contig.removePrefix("chr"),
                     datasetId = datasetId,
                     alleleFrequency = it.getAttributeAsStringList("AF", null).map { af -> af.toDouble() },
                     alternateBases = it.alternateAlleles.map { allele -> allele.baseString },
