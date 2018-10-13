@@ -3,6 +3,8 @@ package org.bipmed.import.vcf
 import htsjdk.variant.variantcontext.VariantContext
 import htsjdk.variant.vcf.VCFFileReader
 import org.bipmed.import.variant.Variant
+import org.nield.kotlinstatistics.median
+import org.nield.kotlinstatistics.percentile
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.stereotype.Component
 import java.io.File
@@ -27,6 +29,9 @@ class VcfImporter(private val mongoTemplate: MongoTemplate) {
         var count = 0L
 
         vcfFileReader.forEach {
+            val coverage = it.genotypes.map { genotype -> genotype.dp }
+            val genQual = it.genotypes.map { genotype -> genotype.gq }
+
             val variant = Variant(
                     variantIds = listOf(it.id),
                     geneSymbol = getGeneSymbol(geneSymbolIndex, it),
@@ -37,7 +42,22 @@ class VcfImporter(private val mongoTemplate: MongoTemplate) {
                     alleleFrequency = it.getAttributeAsStringList("AF", null).map { af -> af.toDouble() },
                     alternateBases = it.alternateAlleles.map { allele -> allele.baseString },
                     referenceBases = it.reference.baseString,
-                    assemblyId = assemblyId)
+                    assemblyId = assemblyId,
+
+                    minCov = coverage.min(),
+                    q25Cov = coverage.percentile(25.0),
+                    medianCov = coverage.median(),
+                    q75Cov = coverage.percentile(75.0),
+                    maxCov = coverage.max(),
+                    meanCov = coverage.average(),
+
+                    minGenQual = genQual.min(),
+                    q25GenQual = genQual.percentile(25.0),
+                    medianGenQual = genQual.median(),
+                    q75GenQual = genQual.percentile(75.0),
+                    maxGenQual = genQual.max(),
+                    meanGenQual = genQual.average()
+            )
 
             mongoTemplate.insert(variant)
             count++
