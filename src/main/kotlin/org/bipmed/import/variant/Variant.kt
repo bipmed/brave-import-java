@@ -27,5 +27,7 @@ data class Variant (
         val medianGenQual: Number? = null,
         val q75GenQual: Number? = null,
         val maxGenQual: Int? = null,
-        val meanGenQual: Number? = null
+        val meanGenQual: Number? = null,
+
+        val clnsig: Int? = null
 )

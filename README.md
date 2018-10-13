@@ -2,21 +2,12 @@
 
 ## VCF requirements
 
-Info columns:
+`INFO` columns:
 
-- `NS` - Number of Samples With Data
-- `AF` - Allele Frequency
-- `ANN` - (Optional) Column added by snpEff tool
-
-## Annotate VCF
-
-```bash
-curl -L http://sourceforge.net/projects/snpeff/files/snpEff_latest_core.zip > snpEff_latest_core.zip
-unzip snpEff_latest_core.zip 
-java -Xmx4g -jar snpEff/snpEff.jar hg19 src/test/resources/test.vcf.gz > src/test/resources/test.ann.vcf
-bgzip src/test/resources/test.ann.vcf
-tabix src/test/resources/test.ann.vcf.gz
-```
+- `NS` - Number of samples with data,
+- `AF` - Allele frequency
+- `ANN` - Standard annotation format. Added by snpEff and ClinEff
+- `CLNSIG` Variant clinical significance. Added by ClinEff
 
 ## Build Jar file
 
