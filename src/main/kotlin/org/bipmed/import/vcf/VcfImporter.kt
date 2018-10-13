@@ -48,7 +48,7 @@ class VcfImporter(private val mongoTemplate: MongoTemplate) {
                     maxGenQual = genQual.max(),
                     meanGenQual = genQual.average(),
 
-                    clnsig = it.getAttributeAsString("CLNSIG", null)?.toInt()
+                    clnsig = it.getAttributeAsString("CLNSIG", null)
             )
 
             mongoTemplate.insert(variant)
