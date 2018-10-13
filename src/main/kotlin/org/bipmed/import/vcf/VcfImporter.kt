@@ -16,16 +16,6 @@ class VcfImporter(private val mongoTemplate: MongoTemplate) {
     fun import(filename: String, datasetId: String, assemblyId: String): Long {
         val vcfFileReader = VCFFileReader(File(filename), false)
 
-        val geneSymbolIndex = if (vcfFileReader.fileHeader.hasInfoLine("ANN")) {
-            vcfFileReader
-                    .fileHeader
-                    .getInfoHeaderLine("ANN")
-                    .description.split('|')
-                    .indexOf(" Gene_Name ")
-        } else {
-            null
-        }
-
         var count = 0L
 
         vcfFileReader.forEach {
@@ -34,7 +24,7 @@ class VcfImporter(private val mongoTemplate: MongoTemplate) {
 
             val variant = Variant(
                     variantIds = listOf(it.id),
-                    geneSymbol = getGeneSymbol(geneSymbolIndex, it),
+                    geneSymbol = getGeneSymbol(it),
                     sampleCount = it.getAttributeAsString("NS", null)?.toLong(),
                     start = it.start.toLong(),
                     referenceName = it.contig.removePrefix("chr"),
@@ -66,9 +56,9 @@ class VcfImporter(private val mongoTemplate: MongoTemplate) {
         return count
     }
 
-    private fun getGeneSymbol(geneSymbolIndex: Int?, it: VariantContext): String? {
-        return if (it.hasAttribute("ANN") && geneSymbolIndex != null) {
-            it.getAttributeAsString("ANN", null).split('|')[geneSymbolIndex]
+    private fun getGeneSymbol(it: VariantContext): String? {
+        return if (it.hasAttribute("ANN")) {
+            it.getAttribute("ANN").toString().split('|')[3]
         } else {
             null
         }
