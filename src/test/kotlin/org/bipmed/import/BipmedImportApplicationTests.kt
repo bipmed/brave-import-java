@@ -60,7 +60,6 @@ class BipmedImportApplicationTests {
                     meanGenQual = 46.333333333333336
             ),
             Variant(
-                    variantIds = listOf("."),
                     datasetId = "test",
                     assemblyId = "hg19",
                     referenceName = "20",
@@ -112,7 +111,6 @@ class BipmedImportApplicationTests {
                     meanGenQual = 19.333333333333332
             ),
             Variant(
-                    variantIds = listOf("."),
                     datasetId = "test",
                     assemblyId = "hg19",
                     referenceName = "20",

@@ -23,7 +23,7 @@ class VcfImporter(private val mongoTemplate: MongoTemplate) {
             val genQual = it.genotypes.map { genotype -> genotype.gq }
 
             val variant = Variant(
-                    variantIds = listOf(it.id),
+                    variantIds = it.id.split(';').filterNot { id -> id.contentEquals(".") },
                     geneSymbol = getGeneSymbol(it),
                     sampleCount = it.getAttributeAsString("NS", null)?.toLong(),
                     start = it.start.toLong(),
