@@ -45,19 +45,23 @@ class BipmedImportApplicationTests {
                     alleleFrequency = listOf(0.5),
                     sampleCount = 3,
 
-                    minCov = 1,
-                    q25Cov = 1.0,
-                    medianCov = 5.0,
-                    q75Cov = 8.0,
-                    maxCov = 8,
-                    meanCov = 4.666666666666667,
+                    coverage = Variant.Statistics(
+                            min = 1,
+                            q25 = 1.0,
+                            median = 5.0,
+                            q75 = 8.0,
+                            max = 8,
+                            mean = 4.666666666666667
+                    ),
 
-                    minGenQual = 43,
-                    q25GenQual = 43.0,
-                    medianGenQual = 48.0,
-                    q75GenQual = 48.0,
-                    maxGenQual = 48,
-                    meanGenQual = 46.333333333333336
+                    genotypeQuality = Variant.Statistics(
+                            min = 43,
+                            q25 = 43.0,
+                            median = 48.0,
+                            q75 = 48.0,
+                            max = 48,
+                            mean = 46.333333333333336
+                    )
             ),
             Variant(
                     datasetId = "test",
@@ -70,19 +74,23 @@ class BipmedImportApplicationTests {
                     alleleFrequency = listOf(0.017),
                     sampleCount = 3,
 
-                    minCov = 3,
-                    q25Cov = 3.0,
-                    medianCov = 3.0,
-                    q75Cov = 5.0,
-                    maxCov = 5,
-                    meanCov = 3.6666666666666665,
+                    coverage = Variant.Statistics(
+                            min = 3,
+                            q25 = 3.0,
+                            median = 3.0,
+                            q75 = 5.0,
+                            max = 5,
+                            mean = 3.6666666666666665
+                    ),
 
-                    minGenQual = 3,
-                    q25GenQual = 3.0,
-                    medianGenQual = 41.0,
-                    q75GenQual = 49.0,
-                    maxGenQual = 49,
-                    meanGenQual = 31.0
+                    genotypeQuality = Variant.Statistics(
+                            min = 3,
+                            q25 = 3.0,
+                            median = 41.0,
+                            q75 = 49.0,
+                            max = 49,
+                            mean = 31.0
+                    )
             ),
             Variant(
                     variantIds = listOf("rs6040355"),
@@ -96,19 +104,23 @@ class BipmedImportApplicationTests {
                     alleleFrequency = listOf(0.333, 0.667),
                     sampleCount = 2,
 
-                    minCov = 0,
-                    q25Cov = 0.0,
-                    medianCov = 4.0,
-                    q75Cov = 6.0,
-                    maxCov = 6,
-                    meanCov = 3.3333333333333335,
+                    coverage = Variant.Statistics(
+                            min = 0,
+                            q25 = 0.0,
+                            median = 4.0,
+                            q75 = 6.0,
+                            max = 6,
+                            mean = 3.3333333333333335
+                    ),
 
-                    minGenQual = 2,
-                    q25GenQual = 2.0,
-                    medianGenQual = 21.0,
-                    q75GenQual = 35.0,
-                    maxGenQual = 35,
-                    meanGenQual = 19.333333333333332
+                    genotypeQuality = Variant.Statistics(
+                            min = 2,
+                            q25 = 2.0,
+                            median = 21.0,
+                            q75 = 35.0,
+                            max = 35,
+                            mean = 19.333333333333332
+                    )
             ),
             Variant(
                     datasetId = "test",
@@ -120,19 +132,23 @@ class BipmedImportApplicationTests {
                     geneSymbol = null,
                     sampleCount = 3,
 
-                    minCov = 2,
-                    q25Cov = 2.0,
-                    medianCov = 4.0,
-                    q75Cov = 7.0,
-                    maxCov = 7,
-                    meanCov = 4.333333333333333,
+                    coverage = Variant.Statistics(
+                            min = 2,
+                            q25 = 2.0,
+                            median = 4.0,
+                            q75 = 7.0,
+                            max = 7,
+                            mean = 4.333333333333333
+                    ),
 
-                    minGenQual = 48,
-                    q25GenQual = 48.0,
-                    medianGenQual = 54.0,
-                    q75GenQual = 61.0,
-                    maxGenQual = 61,
-                    meanGenQual = 54.333333333333336
+                    genotypeQuality = Variant.Statistics(
+                            min = 48,
+                            q25 = 48.0,
+                            median = 54.0,
+                            q75 = 61.0,
+                            max = 61,
+                            mean = 54.333333333333336
+                    )
             ),
             Variant(
                     variantIds = listOf("microsat1"),
@@ -145,19 +161,23 @@ class BipmedImportApplicationTests {
                     geneSymbol = "RAD21L1",
                     sampleCount = 3,
 
-                    minCov = 2,
-                    q25Cov = 2.0,
-                    medianCov = 3.0,
-                    q75Cov = 4.0,
-                    maxCov = 4,
-                    meanCov = 3.0,
+                    coverage = Variant.Statistics(
+                            min = 2,
+                            q25 = 2.0,
+                            median = 3.0,
+                            q75 = 4.0,
+                            max = 4,
+                            mean = 3.0
+                    ),
 
-                    minGenQual = 17,
-                    q25GenQual = 17.0,
-                    medianGenQual = 35.0,
-                    q75GenQual = 40.0,
-                    maxGenQual = 40,
-                    meanGenQual = 30.666666666666668
+                    genotypeQuality = Variant.Statistics(
+                            min = 17,
+                            q25 = 17.0,
+                            median = 35.0,
+                            q75 = 40.0,
+                            max = 40,
+                            mean = 30.666666666666668
+                    )
             )
     )
 

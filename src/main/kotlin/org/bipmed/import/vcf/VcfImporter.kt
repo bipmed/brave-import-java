@@ -19,8 +19,8 @@ class VcfImporter(private val mongoTemplate: MongoTemplate) {
         var count = 0L
 
         vcfFileReader.forEach {
-            val coverage = it.genotypes.map { genotype -> genotype.dp }
-            val genQual = it.genotypes.map { genotype -> genotype.gq }
+            val coverages = it.genotypes.map { genotype -> genotype.dp }
+            val genotypeQualities = it.genotypes.map { genotype -> genotype.gq }
 
             val variant = Variant(
                     variantIds = it.id.split(';').filterNot { id -> id.contentEquals(".") },
@@ -34,19 +34,23 @@ class VcfImporter(private val mongoTemplate: MongoTemplate) {
                     referenceBases = it.reference.baseString,
                     assemblyId = assemblyId,
 
-                    minCov = coverage.min(),
-                    q25Cov = coverage.percentile(25.0),
-                    medianCov = coverage.median(),
-                    q75Cov = coverage.percentile(75.0),
-                    maxCov = coverage.max(),
-                    meanCov = coverage.average(),
+                    coverage = Variant.Statistics(
+                            min = coverages.min(),
+                            q25 = coverages.percentile(25.0),
+                            median = coverages.median(),
+                            q75 = coverages.percentile(75.0),
+                            max = coverages.max(),
+                            mean = coverages.average()
+                    ),
 
-                    minGenQual = genQual.min(),
-                    q25GenQual = genQual.percentile(25.0),
-                    medianGenQual = genQual.median(),
-                    q75GenQual = genQual.percentile(75.0),
-                    maxGenQual = genQual.max(),
-                    meanGenQual = genQual.average(),
+                    genotypeQuality = Variant.Statistics(
+                            min = genotypeQualities.min(),
+                            q25 = genotypeQualities.percentile(25.0),
+                            median = genotypeQualities.median(),
+                            q75 = genotypeQualities.percentile(75.0),
+                            max = genotypeQualities.max(),
+                            mean = genotypeQualities.average()
+                    ),
 
                     clnsig = it.getAttributeAsString("CLNSIG", null)
             )
