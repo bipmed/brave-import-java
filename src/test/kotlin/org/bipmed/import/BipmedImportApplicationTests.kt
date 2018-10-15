@@ -64,6 +64,7 @@ class BipmedImportApplicationTests {
                     )
             ),
             Variant(
+                    variantIds = listOf("n.17330T>A"),
                     datasetId = "test",
                     assemblyId = "hg19",
                     referenceName = "20",

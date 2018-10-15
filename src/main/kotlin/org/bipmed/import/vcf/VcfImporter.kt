@@ -23,7 +23,7 @@ class VcfImporter(private val mongoTemplate: MongoTemplate) {
             val genotypeQualities = it.genotypes.map { genotype -> genotype.gq }
 
             val variant = Variant(
-                    variantIds = it.id.split(';').filterNot { id -> id.contentEquals(".") },
+                    variantIds = getId(it),
                     geneSymbol = getGeneSymbol(it),
                     sampleCount = it.getAttributeAsString("NS", null)?.toLong(),
                     start = it.start.toLong(),
@@ -62,9 +62,19 @@ class VcfImporter(private val mongoTemplate: MongoTemplate) {
         return count
     }
 
-    private fun getGeneSymbol(it: VariantContext): String? {
-        return if (it.hasAttribute("ANN")) {
-            it.getAttribute("ANN").toString().split('|')[3]
+    private fun getId(variant: VariantContext): List<String> {
+        return when {
+            variant.hasAttribute("RS") -> variant.getAttributeAsString("RS", null).split(',').map { "rs$it" }
+            variant.id != "." -> variant.id.split(';')
+            variant.hasAttribute("CLNHGVS") -> listOf(variant.getAttributeAsString("CLNHGVS", null))
+            variant.hasAttribute("ANN") -> listOf(variant.getAttribute("ANN").toString().split('|')[9]) // HGVS.c: Variant using HGVS notation (DNA level)
+            else -> listOf()
+        }
+    }
+
+    private fun getGeneSymbol(variant: VariantContext): String? {
+        return if (variant.hasAttribute("ANN")) {
+            variant.getAttribute("ANN").toString().split('|')[3] // Gene Name
         } else {
             null
         }
