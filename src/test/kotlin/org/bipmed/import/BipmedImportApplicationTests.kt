@@ -34,7 +34,7 @@ class BipmedImportApplicationTests {
 
     private val variants = listOf(
             Variant(
-                    variantIds = listOf("rs6054257"),
+                    snpIds = listOf("rs6054257"),
                     datasetId = "test",
                     assemblyId = "hg19",
                     referenceName = "20",
@@ -64,7 +64,6 @@ class BipmedImportApplicationTests {
                     )
             ),
             Variant(
-                    variantIds = listOf("n.17330T>A"),
                     datasetId = "test",
                     assemblyId = "hg19",
                     referenceName = "20",
@@ -94,7 +93,7 @@ class BipmedImportApplicationTests {
                     )
             ),
             Variant(
-                    variantIds = listOf("rs6040355"),
+                    snpIds = listOf("rs6040355"),
                     datasetId = "test",
                     assemblyId = "hg19",
                     referenceName = "20",
@@ -152,7 +151,7 @@ class BipmedImportApplicationTests {
                     )
             ),
             Variant(
-                    variantIds = listOf("microsat1"),
+                    snpIds = listOf("microsat1"),
                     datasetId = "test",
                     assemblyId = "hg19",
                     referenceName = "20",
