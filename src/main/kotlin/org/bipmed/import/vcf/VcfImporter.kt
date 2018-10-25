@@ -24,15 +24,16 @@ class VcfImporter(private val mongoTemplate: MongoTemplate) {
 
             val variant = Variant(
                     snpIds = if (it.id != ".") it.id.split(';') else emptyList(),
+                    datasetId = datasetId,
+                    assemblyId = assemblyId,
+                    totalSamples = vcfFileReader.fileHeader.nGenotypeSamples,
+                    referenceName = it.contig.removePrefix("chr"),
                     geneSymbol = getGeneSymbol(it),
                     sampleCount = it.getAttributeAsString("NS", null)?.toLong(),
                     start = it.start.toLong(),
-                    referenceName = it.contig.removePrefix("chr"),
-                    datasetId = datasetId,
                     alleleFrequency = it.getAttributeAsStringList("AF", null).map { af -> af.toDouble() },
                     alternateBases = it.alternateAlleles.map { allele -> allele.baseString },
                     referenceBases = it.reference.baseString,
-                    assemblyId = assemblyId,
 
                     coverage = Variant.Statistics(
                             min = coverages.min(),
