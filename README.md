@@ -24,28 +24,18 @@ mvn install -DskipTests dockerfile:build
 ## Import VCF
 
 ```bash
-java -jar target/bipmed-import.jar \
+java -jar target/brave-import.jar \
     --filename=src/test/resources/test.ann.vcf.gz \
     --datasetId=bipmed \
     --assemblyId=hg19
 ```
 
-## Import VCF to BIPMed DB container
-
-```bash
-docker container run \
-    --rm \
-    --name bipmed_db \
-    --network bipmed \
-    mongo
-```
+## Import VCF through docker
 
 ```bash
 docker run --rm \
     -v `pwd`/src/test/resources/test.ann.vcf.gz:/test.ann.vcf.gz \
-    --network bipmed \
-    -e SPRING_DATA_MONGODB_URI=mongodb://bipmed_db:27017/bipmed \
-    welliton/bipmed-import \
+    welliton/brave-import \
     --filename=/test.ann.vcf.gz \
     --datasetId=bipmed \
     --assemblyId=hg19

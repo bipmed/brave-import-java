@@ -1,11 +1,11 @@
-package org.bipmed.import
+package org.bipmed.brave.import
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class BipmedImportApplication
+class BraveImportApplication
 
 fun main(args: Array<String>) {
-    runApplication<BipmedImportApplication>(*args)
+    runApplication<BraveImportApplication>(*args)
 }

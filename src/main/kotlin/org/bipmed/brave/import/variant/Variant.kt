@@ -1,17 +1,18 @@
-package org.bipmed.import.variant
+package org.bipmed.brave.import.variant
 
-import org.springframework.data.mongodb.core.mapping.Document
+import com.fasterxml.jackson.annotation.JsonIgnore
 
-@Document
 data class Variant(
+        @JsonIgnore
+        val id: String? = null,
         val snpIds: List<String> = emptyList(),
-        val datasetId: String,
-        val assemblyId: String,
-        val totalSamples: Int,
-        val referenceName: String,
-        val start: Long,
-        val referenceBases: String,
-        val alternateBases: List<String>,
+        val datasetId: String? = null,
+        val assemblyId: String? = null,
+        val totalSamples: Int? = null,
+        val referenceName: String? = null,
+        val start: Long? = null,
+        val referenceBases: String? = null,
+        val alternateBases: List<String> = emptyList(),
         val geneSymbol: String? = null,
         val alleleFrequency: List<Number> = emptyList(),
         val sampleCount: Long? = null,

@@ -1,16 +1,17 @@
-package org.bipmed.import.vcf
+package org.bipmed.brave.import.vcf
 
 import htsjdk.variant.variantcontext.VariantContext
 import htsjdk.variant.vcf.VCFFileReader
-import org.bipmed.import.variant.Variant
+import org.bipmed.brave.import.variant.Variant
 import org.nield.kotlinstatistics.median
 import org.nield.kotlinstatistics.percentile
-import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.stereotype.Component
+import org.springframework.web.client.RestTemplate
 import java.io.File
+import kotlin.system.exitProcess
 
 @Component
-class VcfImporter(private val mongoTemplate: MongoTemplate) {
+class VcfImporter(private val restTemplate: RestTemplate) {
 
 
     fun import(filename: String, datasetId: String, assemblyId: String): Long {
@@ -56,7 +57,12 @@ class VcfImporter(private val mongoTemplate: MongoTemplate) {
                     clnsig = it.getAttributeAsString("CLNSIG", null)
             )
 
-            mongoTemplate.insert(variant)
+            val responseEntity = restTemplate.postForEntity("/variants", variant, Variant::class.java)
+            if (responseEntity.statusCode.isError) {
+                println("ERROR: ${responseEntity.statusCode.reasonPhrase}.")
+                exitProcess(1)
+            }
+
             count++
         }
 
