@@ -27,7 +27,8 @@ mvn install -DskipTests dockerfile:build
 java -jar target/brave-import.jar \
     --filename=src/test/resources/test.ann.vcf.gz \
     --datasetId=bipmed \
-    --assemblyId=hg19
+    --assemblyId=hg19 \
+    --password=secret
 ```
 
 ## Import VCF through docker
@@ -38,5 +39,6 @@ docker run --rm \
     welliton/brave-import \
     --filename=/test.ann.vcf.gz \
     --datasetId=bipmed \
-    --assemblyId=hg19
+    --assemblyId=hg19 \
+    --password=secret
 ```

@@ -57,10 +57,12 @@ class VcfImporter(private val restTemplate: RestTemplate) {
                     clnsig = it.getAttributeAsString("CLNSIG", null)
             )
 
-            val responseEntity = restTemplate.postForEntity("/variants", variant, Variant::class.java)
-            if (responseEntity.statusCode.isError) {
-                println("ERROR: ${responseEntity.statusCode.reasonPhrase}.")
+            try {
+                restTemplate.postForLocation("/variants", variant)
+            } catch (exception: Exception) {
+                println("ERROR: ${exception.message}.")
                 exitProcess(1)
+
             }
 
             count++
