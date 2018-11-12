@@ -29,7 +29,7 @@ class VcfImporter(private val restTemplate: RestTemplate) {
                     assemblyId = assemblyId,
                     totalSamples = vcfFileReader.fileHeader.nGenotypeSamples,
                     referenceName = it.contig.removePrefix("chr"),
-                    geneSymbol = getGeneSymbol(it),
+                    geneSymbol = getAnnotationColumn(it, 3),
                     sampleCount = it.getAttributeAsString("NS", null)?.toLong(),
                     start = it.start.toLong(),
                     alleleFrequency = it.getAttributeAsStringList("AF", null).map { af -> af.toDouble() },
@@ -54,7 +54,9 @@ class VcfImporter(private val restTemplate: RestTemplate) {
                             mean = genotypeQualities.average()
                     ),
 
-                    clnsig = it.getAttributeAsString("CLNSIG", null)
+                    clnsig = it.getAttributeAsString("CLNSIG", null),
+                    hgvs = getAnnotationColumn(it, 9),
+                    type = getAnnotationColumn(it, 5)
             )
 
             try {
@@ -71,9 +73,9 @@ class VcfImporter(private val restTemplate: RestTemplate) {
         return count
     }
 
-    private fun getGeneSymbol(variant: VariantContext): String? {
+    private fun getAnnotationColumn(variant: VariantContext, index: Int) : List<String>? {
         return if (variant.hasAttribute("ANN")) {
-            variant.getAttribute("ANN").toString().split('|')[3] // Gene Name
+            variant.getAttribute("ANN").toString().split(',').map { it.split("|")[index] }
         } else {
             null
         }

@@ -13,14 +13,16 @@ data class Variant(
         val start: Long? = null,
         val referenceBases: String? = null,
         val alternateBases: List<String> = emptyList(),
-        val geneSymbol: String? = null,
+        val geneSymbol: List<String>? = null,
         val alleleFrequency: List<Number> = emptyList(),
         val sampleCount: Long? = null,
 
         val coverage: Statistics? = null,
         val genotypeQuality: Statistics? = null,
 
-        val clnsig: String? = null
+        val clnsig: String? = null,
+        val hgvs: List<String>? = null,
+        val type: List<String>? = null
 ) {
     data class Statistics(
             val min: Int? = null,
