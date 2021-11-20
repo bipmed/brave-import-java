@@ -1,4 +1,6 @@
-# Utility tool for importing annotated VCF files into BIPMed Server - https://github.com/labbcb/brave
+Utility tool for importing annotated VCF files into BIPMed Server - https://github.com/labbcb/brave
+
+Please use the newer implementation: https://github.com/bipmed/brave-import
 
 ## VCF requirements
 
